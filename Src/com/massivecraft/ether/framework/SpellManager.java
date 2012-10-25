@@ -14,7 +14,7 @@ import com.massivecraft.ether.framework.interfaces.Spell;
  *
  */
 public final class SpellManager {
-	private static HashMap<String,Class<Spell>> spellMap = new HashMap<>();
+	private static HashMap<String,Class<? extends Spell>> spellMap = new HashMap<>();
 	
 	public static void load() {
 		loadSpells(Spell.class);
@@ -33,7 +33,7 @@ public final class SpellManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static void loadSpells(Class<Spell> spell) {
+	private static void loadSpells(Class<? extends Spell> spell) {
 		int modifiers = spell.getModifiers();
 		
 		//check if it is an implementation
@@ -50,7 +50,7 @@ public final class SpellManager {
 			}catch(Exception e){System.out.println("Load Failed");}
 		}
 		for(Class<?> i : spell.getClasses()){
-			loadSpells(((Class<Spell>)i));
+			loadSpells(((Class<? extends Spell>)i));
 		}
 	}
 
